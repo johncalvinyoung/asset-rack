@@ -35,6 +35,7 @@ class exports.SassAsset extends Asset
 
   create: (options) ->
     throw new Error 'Invalid options' unless options? and options.filename?
+    @imagePath = options.imagePath || '/images'
     @filename = path.resolve options.filename
     @toWatch = path.dirname @filename
     sass.render
@@ -43,3 +44,4 @@ class exports.SassAsset extends Asset
       outputStyle: if options.compress then 'compressed' else 'nested'
       error: (err) => @emit 'error', err
       success: (css) => @emit 'created', contents: @postProcess css
+      imagePath: @imagePath
